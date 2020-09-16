@@ -1,46 +1,47 @@
-function randomSign() {
-  return Math.random() < 0.5 ? '-' : '+';
-}
-
 document.addEventListener("DOMContentLoaded", function(){
 
   var movementBase     = 5;
   var movementVariance = 15;
-  var durationBase     = 1000;
-  var durationVariance = 3000;
-  var delayBase        = 500;
-  var delayVariance    = 1000;
+  var durationBase     = 1500;
+  var durationVariance = 2000;
+  var stagger          = 30;
+  var easing           = 'easeInOutQuad';
 
   anime({
-    targets: 'g.horizontal rect.m.l',
-    translateX: function() {return - movementBase - Math.random() * movementVariance},
-    loop: true,
-    direction: 'alternate',
-    easing: 'easeInOutQuad',
-    // offset: function(){var o = randomSign() + '=' + Math.round(Math.random() * 10000); console.log(o); return o;},
-    delay: function(){return delayBase + Math.random() * delayVariance;},
-    duration: function(){return durationBase + Math.random() * durationVariance;}
-  });
+    targets: 'rect.m',
 
-  anime({
-    targets: 'g.vertical rect.m.t',
-    translateY: function() {return - movementBase - Math.random() * movementVariance},
-    loop: true,
-    direction: 'alternate',
-    easing: 'easeInOutQuad',
-    // offset: function(){var o = randomSign() + '=' + Math.round(Math.random() * 10000); console.log(o); return o;},
-    delay: function(){return delayBase + Math.random() * delayVariance;},
-    duration: function(){return durationBase + Math.random() * durationVariance;}
-  });
+    translateX: function(el) {
+      var top    = el.classList.contains("t");
+      var bottom = el.classList.contains("b");
 
-  anime({
-    targets: 'g.vertical rect.m.b',
-    translateY: function() {return + movementBase + Math.random() * movementVariance},
+      if (top || bottom) {return 0};
+
+      var left  = el.classList.contains("l");
+      var right = el.classList.contains("r");
+
+      var sign = (left) ? -1 : 1;
+
+      return sign * (movementBase + Math.random() * movementVariance);
+    },
+
+    translateY: function(el) {
+      var left  = el.classList.contains("l");
+      var right = el.classList.contains("r");
+
+      if (left || right) {return 0};
+
+      var top    = el.classList.contains("t");
+      var bottom = el.classList.contains("b");
+
+      var sign = (top) ? -1 : 1;
+
+      return sign * (movementBase + Math.random() * movementVariance);
+    },
+
     loop: true,
     direction: 'alternate',
-    easing: 'easeInOutQuad',
-    // offset: function(){var o = randomSign() + '=' + Math.round(Math.random() * 10000); console.log(o); return o;},
-    delay: function(){return delayBase + Math.random() * delayVariance;},
+    easing: easing,
+    delay: anime.stagger(stagger),
     duration: function(){return durationBase + Math.random() * durationVariance;}
   });
 
