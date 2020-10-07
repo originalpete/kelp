@@ -1,6 +1,6 @@
 # Kelp
 
-Uses anime.js to turn SVG into soothing kelp motion. Open index.html to view.
+Uses anime.js to turn SVG into soothing kelp motion. Open index.html to view, or [take a look on CodePen](https://codepen.io/originalpete/pen/xxVzNgd).
 
 Caveats:
 
